@@ -1,0 +1,53 @@
+# Description: Build DockerImages using GitHub Actions
+
+name: Clash Premium
+
+on:
+  push:
+    tags:
+      - '*'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    name: Docker Buildx
+
+    steps:
+      - name: Initialization environment
+        id: init
+        run: |
+          echo "image_name=${{ github.repository }}" >> $GITHUB_OUTPUT 
+          echo "version=${GITHUB_REF/refs\/tags\//}" >> $GITHUB_OUTPUT
+          echo "platform=linux/arm64,linux/amd64,linux/arm/v7,linux/arm/v6,linux/arm/v5" >> $GITHUB_OUTPUT
+      - name: Checkout Repository
+        uses: actions/checkout@main
+
+      - name: Set up QEMU Simulator
+        uses: docker/setup-qemu-action@master
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@master
+
+      - name: Login to DockerHub
+        uses: docker/login-action@master
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Docker meta
+        id: meta
+        uses: docker/metadata-action@master
+        with:
+          images: ${{ steps.init.outputs.image_name }}
+          tags: type=ref,event=tag
+
+      - name: Build and Publish image
+        uses: docker/build-push-action@master
+        with:
+          push: false
+          context: docker
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+          platforms: ${{ steps.init.outputs.platform }}
+          build-args: |
+            CLASH_PREMIUM_VERSION=${{ steps.init.outputs.version }}
