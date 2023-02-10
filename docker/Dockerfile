@@ -20,7 +20,7 @@ ENV SHELL=/bin/bash \
 
 COPY --from=builder /out/clash /usr/bin/clash
 COPY --from=builder /out/public /clash/ui
-COPY --from=builder /out/Country.mmdb /clash/Country.mmdb
+COPY --from=builder /out/Country.mmdb /clash/config/Country.mmdb
 COPY --from=builder /out/entrypoint.sh /usr/bin/entrypoint.sh
 
 RUN apk add --update --no-cache \

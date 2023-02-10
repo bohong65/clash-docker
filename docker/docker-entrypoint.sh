@@ -59,4 +59,4 @@ function initApp() {
 
 initApp
 
-exec clash -d /clash -ext-ui /clash/ui "$@"
+exec clash -d /clash/config -ext-ui /clash/ui "$@"
