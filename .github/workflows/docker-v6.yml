@@ -1,6 +1,6 @@
 # Description: Build DockerImages using GitHub Actions
 
-name: Clash Premium
+name: Clash Premium armv7&armv6
 
 on:
   push:
