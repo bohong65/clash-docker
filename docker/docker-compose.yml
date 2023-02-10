@@ -1,8 +1,8 @@
 version: '3'
 services:
   clash:
-    image: uxber/clash:latest
-    container_name: clash
+    image: bohong65/clash-docker:latest
+    container_name: clash-docker
     network_mode: host # bridge
     restart: always
     # ports:
