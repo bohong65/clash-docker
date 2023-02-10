@@ -30,7 +30,7 @@ TIPS: Make sure to add following config into your `config.yaml`
 ```
 mixed-port: 7890
 allow-lan: true
-external-controller: 127.0.0.1:901
+external-controller: 0.0.0.0:901
 ```
-Yacd web panel: `host-ip:9090/ui`
+Yacd web panel: `host-ip:901/ui`
 
