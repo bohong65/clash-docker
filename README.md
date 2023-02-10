@@ -17,15 +17,20 @@
 # Usage
 ```
 docker run -d \
- --name clash \
- --network host \
+ --name clash-dev \
+ -p 901:901 \
+ -p 7890:7890 \
  --hostname clash \
  --restart unless-stopped \
+ -v /storage/clash/config:/clash/config \
  bohong65/clash-docker:latest
  ```
  
-You can choose to mount `/clash` folder to anywhere you like on your host, but mounting using `docker run -v` command is NOT recommended cause Yacd directory`/clash/ui` will not be created. This is a bug in <a href="https://hub.docker.com/r/xtoys/clash"> xtoys/clash </a>, may be fixed here in future release.
+TIPS: Make sure to add following config into your `config.yaml`
+```
+mixed-port: 7890
+allow-lan: true
+external-controller: 127.0.0.1:901
+```
+Yacd web panel: `host-ip:9090/ui`
 
-Yacd web port: `ip:9090/ui`
-
-&nbsp;
